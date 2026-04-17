@@ -14,9 +14,11 @@ import Animated, {
 
 import IntroPage from "./src/screens/IntroPage";
 import LoginStartPage from "./src/screens/LoginStartPage";
+import LoginPage from "./src/screens/LoginPage";
+import HomePage from "./src/screens/HomePage";
 
 export default function App() {
-  const [currentScreen, setCurrentScreen] = useState<'splash' | 'intro' | 'loginStart'>('splash');
+  const [currentScreen, setCurrentScreen] = useState<'splash' | 'intro' | 'loginStart' | 'login' | 'home'>('splash');
   const opacity = useSharedValue(1);
 
   const handleEnter = () => {
@@ -30,6 +32,14 @@ export default function App() {
 
   const handleContinue = () => {
     setCurrentScreen('loginStart');
+  };
+
+  const handleLoginClick = () => {
+    setCurrentScreen('login');
+  };
+
+  const handleLoginSuccess = () => {
+    setCurrentScreen('home');
   };
 
   const animatedSplashStyle = useAnimatedStyle(() => ({
@@ -60,7 +70,25 @@ export default function App() {
     return (
       <View style={{ flex: 1 }}>
         <StatusBar style="dark" />
-        <LoginStartPage />
+        <LoginStartPage onLogin={handleLoginClick} />
+      </View>
+    );
+  }
+
+  if (currentScreen === 'login') {
+    return (
+      <View style={{ flex: 1 }}>
+        <StatusBar style="dark" />
+        <LoginPage onLogin={handleLoginSuccess} />
+      </View>
+    );
+  }
+
+  if (currentScreen === 'home') {
+    return (
+      <View style={{ flex: 1 }}>
+        <StatusBar style="dark" />
+        <HomePage />
       </View>
     );
   }

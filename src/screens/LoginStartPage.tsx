@@ -3,7 +3,7 @@ import { View, StyleSheet, Text, Pressable } from 'react-native';
 import { Image } from 'expo-image';
 import Animated, { FadeIn, FadeInDown } from 'react-native-reanimated';
 
-const LoginStartPage = () => {
+const LoginStartPage = ({ onLogin }: { onLogin?: () => void }) => {
   return (
     <View className="flex-1 bg-white">
       <Animated.View style={{ flex: 1 }} entering={FadeIn.duration(800)}>
@@ -22,7 +22,7 @@ const LoginStartPage = () => {
           </Animated.View>
 
           <Animated.View entering={FadeInDown.delay(600).duration(800)} className="w-full">
-            <Pressable className="w-full bg-[#af8cfa] py-5 rounded-full shadow-xl shadow-[#af8cfa]/40 items-center justify-center">
+            <Pressable onPress={onLogin} className="w-full bg-[#af8cfa] py-5 rounded-full shadow-xl shadow-[#af8cfa]/40 items-center justify-center">
               <Text className="text-slate-900 text-[22px] font-bold tracking-tight">
                 login
               </Text>
