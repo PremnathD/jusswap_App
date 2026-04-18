@@ -48,17 +48,30 @@ const ProfilePage = ({ onBack }: ProfilePageProps) => {
         className="flex-1 px-8"
         contentContainerStyle={{ paddingBottom: 40 }}
       >
-        {/* Header */}
-        <View className="flex-row items-center justify-between mt-4 mb-6">
-          <Pressable 
-            onPress={onBack}
-            className="w-10 h-10 rounded-full bg-slate-50 items-center justify-center border border-slate-100"
-          >
-            <ArrowLeft size={20} color="#1e293b" />
-          </Pressable>
-        </View>
+        {/* Redesigned Header Section */}
+        <Animated.View 
+          entering={FadeInDown.duration(600)}
+          className="flex-row items-center justify-between pt-[50px] mb-8"
+        >
+          <View className="flex-row items-center">
+            <Pressable 
+              onPress={onBack}
+              className="w-12 h-12 rounded-2xl bg-white items-center justify-center border border-slate-100 shadow-sm active:scale-95 transition-all"
+            >
+              <ArrowLeft size={22} color="#1e293b" strokeWidth={2.5} />
+            </Pressable>
+            <Text className="ml-5 text-slate-900 font-bold text-[28px] tracking-tight">Profile</Text>
+          </View>
 
-        <Text className="text-slate-900 font-bold text-[36px] tracking-tight mb-8">Profile</Text>
+          <Pressable 
+            className="w-12 h-12 rounded-2xl bg-white items-center justify-center border border-slate-100 shadow-sm active:scale-95"
+          >
+            <Bell size={20} color="#64748b" strokeWidth={2} />
+            <View className="absolute top-3.5 right-3.5 w-2 h-2 bg-rose-500 rounded-full border border-white" />
+          </Pressable>
+        </Animated.View>
+
+        {/* Removed redundant Profile text */}
 
         {/* Profile Card */}
         <Animated.View 
@@ -68,7 +81,7 @@ const ProfilePage = ({ onBack }: ProfilePageProps) => {
           <View className="relative">
             <View className="w-28 h-28 rounded-full border-4 border-white shadow-xl shadow-slate-200 p-1">
               <Image 
-                source="/Users/tilak/.gemini/antigravity/brain/a11823aa-e4b9-4252-81ee-1b18747ea0c5/tilak_avatar_3d_1776477003249.png"
+                source="https://i.pinimg.com/1200x/69/78/19/69781905dd57ba144ab71ca4271ab294.jpg"
                 style={{ width: '100%', height: '100%', borderRadius: 56 }}
                 contentFit="cover"
               />

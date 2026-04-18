@@ -42,10 +42,20 @@ const HomePage = () => {
   return (
     <SafeAreaView className="flex-1 bg-slate-50">
       <View className="flex-1">
-        {activeTab === 'Profile' ? (
-          <ProfilePage onBack={() => setActiveTab('Home')} />
-        ) : (
-          <>
+        {activeTab === 'Profile' && <ProfilePage onBack={() => setActiveTab('Home')} />}
+
+        {activeTab === 'Chat' && (
+          <View className="flex-1 items-center justify-center">
+            <Text className="text-slate-400 font-bold text-xl">Messages Coming Soon</Text>
+          </View>
+        )}
+
+        {activeTab === 'Home' && (
+          <ScrollView 
+            showsVerticalScrollIndicator={false}
+            className="flex-1"
+            contentContainerStyle={{ paddingBottom: 100 }}
+          >
             {/* Header Section */}
             <Animated.View 
               entering={FadeInDown.duration(800)}
@@ -79,19 +89,15 @@ const HomePage = () => {
 
                 <Pressable onPress={() => setActiveTab('Profile')} className="p-1 rounded-xl">
                   <Image 
-                    source="/Users/tilak/.gemini/antigravity/brain/a11823aa-e4b9-4252-81ee-1b18747ea0c5/tilak_avatar_3d_1776477003249.png"
-                    style={{ width: 44, height: 44, borderRadius: 12 }}
+                    source="https://i.pinimg.com/1200x/69/78/19/69781905dd57ba144ab71ca4271ab294.jpg"
+                    style={{ width: 44, height: 44, borderRadius: 50 }}
                     contentFit="cover"
                   />
                 </Pressable>
               </View>
             </Animated.View>
 
-            <ScrollView 
-              showsVerticalScrollIndicator={false}
-              className="flex-1 px-8"
-              contentContainerStyle={{ paddingBottom: 100 }}
-            >
+            <View className="px-8">
               {/* Search Bar Section */}
               <Animated.View 
                 entering={FadeInDown.delay(200).duration(800)}
@@ -107,41 +113,23 @@ const HomePage = () => {
                 </View>
               </Animated.View>
 
-              {/* Featured Sections (Small with 15px Gap) */}
+              {/* Featured Sections */}
               <Animated.View 
                 entering={FadeInDown.delay(400).duration(800)}
                 className="mt-6 flex-row items-center justify-between"
                 style={{ gap: 15 }}
               >
-                {/* Explore Jusswap Box */}
-                <Pressable 
-                  className="flex-1 bg-white h-[120px] rounded-[24px] p-4 shadow-sm border border-slate-50 relative overflow-hidden active:scale-98"
-                >
-                  <Text className="text-slate-900 font-bold text-[16px] leading-[20px] w-[65%]">
-                    Explore{"\n"}Jusswap
-                  </Text>
+                <Pressable className="flex-1 bg-white h-[120px] rounded-[24px] p-4 shadow-sm border border-slate-50 relative overflow-hidden active:scale-98">
+                  <Text className="text-slate-900 font-bold text-[16px] leading-[20px] w-[65%]">Explore{"\n"}Jusswap</Text>
                   <View className="absolute bottom-1 right-1">
-                    <Image 
-                      source="https://lebiryprumdaarwlhqxr.supabase.co/storage/v1/object/public/jusswap%20app/Main%20pages/Box1.png"
-                      style={{ width: 68, height: 68 }}
-                      contentFit="contain"
-                    />
+                    <Image source="https://lebiryprumdaarwlhqxr.supabase.co/storage/v1/object/public/jusswap%20app/Main%20pages/Box1.png" style={{ width: 68, height: 68 }} contentFit="contain" />
                   </View>
                 </Pressable>
 
-                {/* Track Packages Box */}
-                <Pressable 
-                  className="flex-1 bg-white h-[120px] rounded-[24px] p-4 shadow-sm border border-slate-50 relative overflow-hidden active:scale-98"
-                >
-                  <Text className="text-slate-900 font-bold text-[16px] leading-[20px] w-[65%]">
-                    Track{"\n"}packages
-                  </Text>
+                <Pressable className="flex-1 bg-white h-[120px] rounded-[24px] p-4 shadow-sm border border-slate-50 relative overflow-hidden active:scale-98">
+                  <Text className="text-slate-900 font-bold text-[16px] leading-[20px] w-[65%]">Track{"\n"}packages</Text>
                   <View className="absolute bottom-1 right-1">
-                    <Image 
-                      source="https://lebiryprumdaarwlhqxr.supabase.co/storage/v1/object/public/jusswap%20app/Main%20pages/Box2.png"
-                      style={{ width: 68, height: 68 }}
-                      contentFit="contain"
-                    />
+                    <Image source="https://lebiryprumdaarwlhqxr.supabase.co/storage/v1/object/public/jusswap%20app/Main%20pages/Box2.png" style={{ width: 68, height: 68 }} contentFit="contain" />
                   </View>
                 </Pressable>
               </Animated.View>
@@ -156,11 +144,7 @@ const HomePage = () => {
                   </Pressable>
                 </View>
                 
-                <ScrollView 
-                  horizontal 
-                  showsHorizontalScrollIndicator={false}
-                  contentContainerStyle={{ paddingHorizontal: 32 }}
-                >
+                <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ paddingHorizontal: 32 }}>
                   {PRODUCTS.map((product) => (
                     <ProductCard key={product.id} product={product} />
                   ))}
@@ -177,18 +161,26 @@ const HomePage = () => {
                   </Pressable>
                 </View>
                 
-                <ScrollView 
-                  horizontal 
-                  showsHorizontalScrollIndicator={false}
-                  contentContainerStyle={{ paddingHorizontal: 32 }}
-                >
+                <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ paddingHorizontal: 32 }}>
                   {SWAPS.map((swap) => (
                     <SwapCard key={swap.id} product={swap} />
                   ))}
                 </ScrollView>
               </View>
-            </ScrollView>
-          </>
+            </View>
+          </ScrollView>
+        )}
+
+        {activeTab === 'Explore' && (
+          <View className="flex-1 items-center justify-center">
+            <Text className="text-slate-400 font-bold text-xl">Explore Screen Coming Soon</Text>
+          </View>
+        )}
+
+        {activeTab === 'Favourite' && (
+          <View className="flex-1 items-center justify-center">
+            <Text className="text-slate-400 font-bold text-xl">Favourites Screen Coming Soon</Text>
+          </View>
         )}
 
         {/* Bottom Navigation Bar */}
