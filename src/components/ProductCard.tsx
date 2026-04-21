@@ -7,19 +7,19 @@ import { Product } from '../data/products';
 
 interface ProductCardProps {
   product: Product;
+  isGrid?: boolean;
 }
 
-const ProductCard = ({ product }: ProductCardProps) => {
+const ProductCard = ({ product, isGrid = false }: ProductCardProps) => {
   const [liked, setLiked] = useState(false);
   const cardWidth = 205; // Fixed width for horizontal scroll
 
   const displayPrice = product.price.split('.')[0];
 
   return (
-    <Animated.View 
-      entering={FadeInRight.duration(800)}
-      style={{ width: cardWidth }}
-      className="mr-5 rounded-[22px] bg-white overflow-hidden shadow-sm border border-slate-100"
+    <View 
+      style={!isGrid ? { width: cardWidth } : { width: '100%' }}
+      className={`${!isGrid ? 'mr-5' : 'mb-4'} rounded-[22px] bg-white overflow-hidden shadow-sm border border-slate-100 flex-1`}
     >
       {/* Reduced Height Image Section */}
       <View className="relative h-36 w-full bg-slate-50">
@@ -69,7 +69,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
           </Pressable>
         </View>
       </View>
-    </Animated.View>
+    </View>
   );
 };
 

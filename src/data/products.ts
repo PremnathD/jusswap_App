@@ -5,6 +5,9 @@ export interface Product {
   description: string;
   price: string;
   image: string;
+  rating?: string;
+  badge?: string;
+  donor?: string;
 }
 
 export const PRODUCTS: Product[] = [
@@ -42,5 +45,30 @@ export const SWAPS: Product[] = [
     description: 'Professional graphic tablet with pressure-sensitive pen. Minimal wear, includes all original cables.',
     price: '0', // Not used in SwapCard
     image: 'https://images.unsplash.com/photo-1531297484001-80022131f5a1?q=80&w=2020&auto=format&fit=crop',
+  }
+];
+
+export const DONATIONS: Product[] = [
+  {
+    id: 201,
+    name: 'St. Mary’s Orphanage Support',
+    tags: ['Orphanage', 'Support'],
+    description: 'Contributing to the daily needs of 40 children. We accept clothes, books, and educational toys.',
+    price: 'CONTRIBUTE',
+    image: 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=2070&auto=format&fit=crop',
+    rating: '4.9',
+    badge: 'Top Choice',
+    donor: 'Care Foundation'
+  },
+  {
+    id: 202,
+    name: 'City Youth Center Books',
+    tags: ['Education', 'Library'],
+    description: 'Seeking used storybooks and educational materials for our community library project.',
+    price: 'DONATE',
+    image: 'https://images.unsplash.com/photo-1497633762265-9d179a990aa6?q=80&w=2073&auto=format&fit=crop',
+    rating: '4.7',
+    badge: 'Urgent',
+    donor: 'Local Library'
   }
 ];

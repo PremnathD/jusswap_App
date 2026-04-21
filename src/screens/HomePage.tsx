@@ -25,6 +25,9 @@ import TabBar from '../components/TabBar';
 import ProductCard from '../components/ProductCard';
 import SwapCard from '../components/SwapCard';
 import ProfilePage from './ProfilePage';
+import ChatPage from './ChatPage';
+import FavouritePage from './FavouritePage';
+import ExplorePage from './ExplorePage';
 import { PRODUCTS, SWAPS } from '../data/products';
 
 const { width } = Dimensions.get('window');
@@ -44,11 +47,7 @@ const HomePage = () => {
       <View className="flex-1">
         {activeTab === 'Profile' && <ProfilePage onBack={() => setActiveTab('Home')} />}
 
-        {activeTab === 'Chat' && (
-          <View className="flex-1 items-center justify-center">
-            <Text className="text-slate-400 font-bold text-xl">Messages Coming Soon</Text>
-          </View>
-        )}
+        {activeTab === 'Chat' && <ChatPage />}
 
         {activeTab === 'Home' && (
           <ScrollView 
@@ -172,15 +171,11 @@ const HomePage = () => {
         )}
 
         {activeTab === 'Explore' && (
-          <View className="flex-1 items-center justify-center">
-            <Text className="text-slate-400 font-bold text-xl">Explore Screen Coming Soon</Text>
-          </View>
+          <ExplorePage onProfilePress={() => setActiveTab('Profile')} />
         )}
 
         {activeTab === 'Favourite' && (
-          <View className="flex-1 items-center justify-center">
-            <Text className="text-slate-400 font-bold text-xl">Favourites Screen Coming Soon</Text>
-          </View>
+          <FavouritePage onBack={() => setActiveTab('Home')} />
         )}
 
         {/* Bottom Navigation Bar */}

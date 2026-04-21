@@ -7,17 +7,17 @@ import { Product } from '../data/products';
 
 interface SwapCardProps {
   product: Product;
+  isGrid?: boolean;
 }
 
-const SwapCard = ({ product }: SwapCardProps) => {
+const SwapCard = ({ product, isGrid = false }: SwapCardProps) => {
   const [liked, setLiked] = useState(false);
   const cardWidth = 205; // Matches ProductCard width
 
   return (
-    <Animated.View 
-      entering={FadeInRight.duration(800)}
-      style={{ width: cardWidth }}
-      className="mr-5 rounded-[22px] bg-white overflow-hidden shadow-sm border border-slate-100"
+    <View 
+      style={!isGrid ? { width: cardWidth } : { width: '100%' }}
+      className={`${!isGrid ? 'mr-5' : 'mb-4'} rounded-[22px] bg-white overflow-hidden shadow-sm border border-slate-100 flex-1`}
     >
       {/* Product Image */}
       <View className="h-36 w-full bg-slate-50">
@@ -67,7 +67,7 @@ const SwapCard = ({ product }: SwapCardProps) => {
           <Text className="text-slate-900 font-bold text-[10px]">Swap the product</Text>
         </Pressable>
       </View>
-    </Animated.View>
+    </View>
   );
 };
 
