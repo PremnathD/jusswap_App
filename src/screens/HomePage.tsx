@@ -28,6 +28,7 @@ import ProfilePage from './ProfilePage';
 import ChatPage from './ChatPage';
 import FavouritePage from './FavouritePage';
 import ExplorePage from './ExplorePage';
+import PostListingPage from './PostListingPage';
 import { PRODUCTS, SWAPS } from '../data/products';
 
 const { width } = Dimensions.get('window');
@@ -178,8 +179,17 @@ const HomePage = () => {
           <FavouritePage onBack={() => setActiveTab('Home')} />
         )}
 
+        {activeTab === 'Add' && (
+          <PostListingPage 
+            onBack={() => setActiveTab('Home')} 
+            onPostSuccess={() => setActiveTab('Home')} 
+          />
+        )}
+
         {/* Bottom Navigation Bar */}
-        <TabBar activeTab={activeTab} onTabPress={setActiveTab} />
+        {activeTab !== 'Add' && (
+          <TabBar activeTab={activeTab} onTabPress={setActiveTab} />
+        )}
       </View>
     </SafeAreaView>
   );
