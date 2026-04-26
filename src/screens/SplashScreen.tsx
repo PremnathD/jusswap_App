@@ -59,8 +59,25 @@ const FloatingItem = ({ angle, radius, imageUrl, size = 48 }: any) => {
 };
 
 const SplashScreen = ({ onEnter }: { onEnter: () => void }) => {
+  const transitioned = React.useRef(false);
+
+  const handleTransition = React.useCallback(() => {
+    if (!transitioned.current) {
+      transitioned.current = true;
+      onEnter();
+    }
+  }, [onEnter]);
+
+  React.useEffect(() => {
+    const timer = setTimeout(() => {
+      handleTransition();
+    }, 3000); // 3 seconds delay
+
+    return () => clearTimeout(timer);
+  }, [handleTransition]);
+
   return (
-    <Pressable onPress={onEnter} className="flex-1 bg-white">
+    <Pressable onPress={handleTransition} className="flex-1 bg-white">
       {/* Image Background */}
       <Image
         source="https://lebiryprumdaarwlhqxr.supabase.co/storage/v1/object/public/jusswap%20app/jusswapBackgroundSplash.jpg"
@@ -113,8 +130,6 @@ const SplashScreen = ({ onEnter }: { onEnter: () => void }) => {
           </Text>
         </Animated.View>
       </View>
-
-
     </Pressable>
   );
 };

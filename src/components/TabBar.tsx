@@ -48,6 +48,7 @@ const TabBar = ({ activeTab, onTabPress }: TabBarProps) => {
           </Text>
         </Pressable>
 
+        {/* Spacer for FAB */}
         <View className="flex-1" />
 
         <Pressable 
@@ -72,15 +73,19 @@ const TabBar = ({ activeTab, onTabPress }: TabBarProps) => {
       </View>
 
       {/* FAB */}
-      <Pressable 
+      <Pressable
         onPress={() => onTabPress('Add')}
-        className="absolute items-center justify-center bg-[#af8cfa] w-[60px] h-[60px] rounded-full shadow-lg shadow-[#af8cfa]/30"
-        style={{ 
-          top: -20,
+        className="absolute items-center justify-center bg-[#af8cfa] w-[60px] h-[60px] rounded-full shadow-lg"
+        style={{
+          top: -22,
           left: '50%',
           transform: [{ translateX: -30 }],
           zIndex: 10,
           elevation: 20,
+          shadowColor: '#af8cfa',
+          shadowOffset: { width: 0, height: 8 },
+          shadowOpacity: 0.45,
+          shadowRadius: 14,
         }}
       >
         <Plus size={30} color="white" strokeWidth={3} />

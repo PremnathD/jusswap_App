@@ -6,7 +6,8 @@ import {
   TextInput, 
   ScrollView, 
   Pressable, 
-  Dimensions
+  Dimensions,
+  Modal,
 } from 'react-native';
 import { Image } from 'expo-image';
 import Animated, { 
@@ -19,7 +20,8 @@ import {
   MessageCircle,
   ChevronRight,
   Filter,
-  Package
+  Package,
+  CheckCircle2,
 } from 'lucide-react-native';
 import TabBar from '../components/TabBar';
 import ProductCard from '../components/ProductCard';
@@ -29,12 +31,43 @@ import ChatPage from './ChatPage';
 import FavouritePage from './FavouritePage';
 import ExplorePage from './ExplorePage';
 import PostListingPage from './PostListingPage';
-import { PRODUCTS, SWAPS } from '../data/products';
+import ProductDetailsPage from './ProductDetailsPage';
+import SwapDetailsPage from './SwapDetailsPage';
+import MakeOfferPage from './MakeOfferPage';
+import { Product, PRODUCTS, SWAPS } from '../data/products';
 
 const { width } = Dimensions.get('window');
 
 const HomePage = () => {
   const [activeTab, setActiveTab] = useState('Home');
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [selectedSwap, setSelectedSwap] = useState<Product | null>(null);
+  const [offerProduct, setOfferProduct] = useState<Product | null>(null);
+  const [showOfferSuccess, setShowOfferSuccess] = useState(false);
+
+  const handleProductPress = (product: Product) => {
+    setSelectedProduct(product);
+  };
+
+  const handleSwapPress = (product: Product) => {
+    setSelectedSwap(product);
+  };
+
+  const handleMakeOffer = () => {
+    if (selectedProduct) {
+      setOfferProduct(selectedProduct);
+      setSelectedProduct(null);
+    }
+  };
+
+  const handleOfferSent = () => {
+    setOfferProduct(null);
+    setShowOfferSuccess(true);
+    setTimeout(() => {
+      setShowOfferSuccess(false);
+      setActiveTab('Home');
+    }, 2800);
+  };
 
   const getGreeting = () => {
     const hour = new Date().getHours();
@@ -146,7 +179,11 @@ const HomePage = () => {
                 
                 <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ paddingHorizontal: 32 }}>
                   {PRODUCTS.map((product) => (
-                    <ProductCard key={product.id} product={product} />
+                    <ProductCard 
+                      key={product.id} 
+                      product={product} 
+                      onPress={handleProductPress}
+                    />
                   ))}
                 </ScrollView>
               </View>
@@ -163,7 +200,11 @@ const HomePage = () => {
                 
                 <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ paddingHorizontal: 32 }}>
                   {SWAPS.map((swap) => (
-                    <SwapCard key={swap.id} product={swap} />
+                    <SwapCard 
+                      key={swap.id} 
+                      product={swap} 
+                      onPress={handleSwapPress}
+                    />
                   ))}
                 </ScrollView>
               </View>
@@ -172,7 +213,11 @@ const HomePage = () => {
         )}
 
         {activeTab === 'Explore' && (
-          <ExplorePage onProfilePress={() => setActiveTab('Profile')} />
+          <ExplorePage 
+            onProfilePress={() => setActiveTab('Profile')} 
+            onProductPress={handleProductPress}
+            onSwapPress={handleSwapPress}
+          />
         )}
 
         {activeTab === 'Favourite' && (
@@ -180,14 +225,77 @@ const HomePage = () => {
         )}
 
         {activeTab === 'Add' && (
-          <PostListingPage 
-            onBack={() => setActiveTab('Home')} 
-            onPostSuccess={() => setActiveTab('Home')} 
+          <PostListingPage
+            onBack={() => setActiveTab('Home')}
+            onPostSuccess={() => setActiveTab('Home')}
           />
         )}
 
-        {/* Bottom Navigation Bar */}
-        {activeTab !== 'Add' && (
+        {selectedProduct && (
+          <View className="absolute inset-0 z-50 bg-white">
+            <ProductDetailsPage 
+              product={selectedProduct} 
+              onBack={() => setSelectedProduct(null)}
+              onMakeOffer={handleMakeOffer}
+            />
+          </View>
+        )}
+
+        {selectedSwap && (
+          <View className="absolute inset-0 z-50 bg-white">
+            <SwapDetailsPage 
+              product={selectedSwap} 
+              onBack={() => setSelectedSwap(null)} 
+            />
+          </View>
+        )}
+
+        {/* Offer Overlay */}
+        {offerProduct && (
+          <View style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, zIndex: 60, backgroundColor: '#f8fafc' }}>
+            <MakeOfferPage
+              product={offerProduct}
+              onBack={() => {
+                setOfferProduct(null);
+                setSelectedProduct(offerProduct);
+              }}
+              onOfferSent={handleOfferSent}
+            />
+          </View>
+        )}
+
+        {/* Offer Success Toast */}
+        {showOfferSuccess && (
+          <View
+            style={{
+              position: 'absolute', top: 0, left: 0, right: 0, bottom: 0,
+              backgroundColor: 'rgba(0,0,0,0.45)', zIndex: 70,
+              alignItems: 'center', justifyContent: 'center',
+            }}
+          >
+            <View
+              style={{
+                backgroundColor: '#fff', borderRadius: 32, padding: 36,
+                alignItems: 'center', width: '80%',
+                shadowColor: '#000', shadowOffset: { width: 0, height: 20 },
+                shadowOpacity: 0.15, shadowRadius: 40, elevation: 30,
+              }}
+            >
+              <View style={{ width: 80, height: 80, borderRadius: 40, backgroundColor: '#ecfdf5', alignItems: 'center', justifyContent: 'center', marginBottom: 18 }}>
+                <CheckCircle2 size={44} color="#10b981" strokeWidth={2.5} />
+              </View>
+              <Text style={{ color: '#0f172a', fontWeight: '900', fontSize: 22, textAlign: 'center', marginBottom: 8 }}>
+                Offer Sent! 🚀
+              </Text>
+              <Text style={{ color: '#64748b', fontWeight: '500', fontSize: 14, textAlign: 'center', lineHeight: 22 }}>
+                Your offer has been sent to the seller. You'll be notified when they respond.
+              </Text>
+            </View>
+          </View>
+        )}
+
+        {/* Bottom Navigation Bar — hidden when Add/Details/Offer is open */}
+        {activeTab !== 'Add' && !selectedProduct && !selectedSwap && !offerProduct && (
           <TabBar activeTab={activeTab} onTabPress={setActiveTab} />
         )}
       </View>

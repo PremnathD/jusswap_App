@@ -19,13 +19,14 @@ import Animated, {
 import ProductCard from '../components/ProductCard';
 import SwapCard from '../components/SwapCard';
 import DonateCard from '../components/DonateCard';
-import { PRODUCTS, SWAPS, DONATIONS } from '../data/products';
-
+import { Product, PRODUCTS, SWAPS, DONATIONS } from '../data/products';
 interface ExplorePageProps {
   onProfilePress: () => void;
+  onProductPress: (p: Product) => void;
+  onSwapPress: (p: Product) => void;
 }
 
-const ExplorePage = ({ onProfilePress }: ExplorePageProps) => {
+const ExplorePage = ({ onProfilePress, onProductPress, onSwapPress }: ExplorePageProps) => {
   const [activeTab, setActiveTab] = useState<'Sell' | 'Swap' | 'Donate'>('Sell');
   const [containerWidth, setContainerWidth] = useState(Dimensions.get('window').width - 64); // Fallback to screen width minus padding
   const slideValue = useSharedValue(0);
@@ -156,9 +157,17 @@ const ExplorePage = ({ onProfilePress }: ExplorePageProps) => {
               style={{ width: activeTab === 'Donate' ? '100%' : '47%' }}
             >
               {activeTab === 'Sell' ? (
-                <ProductCard product={item} isGrid={true} />
+                <ProductCard 
+                  product={item} 
+                  isGrid={true} 
+                  onPress={onProductPress}
+                />
               ) : activeTab === 'Swap' ? (
-                <SwapCard product={item} isGrid={true} />
+                <SwapCard 
+                  product={item} 
+                  isGrid={true} 
+                  onPress={onSwapPress}
+                />
               ) : (
                 <DonateCard donation={item} />
               )}

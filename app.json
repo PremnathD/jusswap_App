@@ -29,7 +29,13 @@
     },
     "plugins": [
       "expo-router",
-      "expo-image-picker"
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Allow JUSSWAP to access your photos to upload product images.",
+          "cameraPermission": "Allow JUSSWAP to access your camera to take product photos."
+        }
+      ]
     ]
   }
 }
