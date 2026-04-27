@@ -71,7 +71,7 @@ const SplashScreen = ({ onEnter }: { onEnter: () => void }) => {
   React.useEffect(() => {
     const timer = setTimeout(() => {
       handleTransition();
-    }, 3000); // 3 seconds delay
+    }, 1000); // 3 seconds delay
 
     return () => clearTimeout(timer);
   }, [handleTransition]);

@@ -21,7 +21,7 @@ const LoginPage = ({ onLogin }: { onLogin?: () => void }) => {
 
   return (
     <View className="flex-1 bg-white">
-      <Animated.View style={{ flex: 1 }} entering={FadeIn.duration(800)}>
+      <Animated.View style={{ flex: 1 }} entering={FadeIn}>
         {/* Background Image */}
         <Image
           source="https://lebiryprumdaarwlhqxr.supabase.co/storage/v1/object/public/jusswap%20app/Intro%20Page/LoginPage.jpg"
@@ -39,7 +39,7 @@ const LoginPage = ({ onLogin }: { onLogin?: () => void }) => {
               {/* This container ensures the white background goes all the way to the bottom */}
               <View className="bg-white rounded-t-[50px] overflow-hidden">
                 <Animated.View 
-                  entering={FadeInUp.delay(300).duration(800)} 
+                  entering={FadeInUp} 
                   className="w-full px-8 pt-12 pb-12 shadow-2xl"
                 >
                   {/* Email Input */}
